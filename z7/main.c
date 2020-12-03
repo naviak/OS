@@ -72,6 +72,7 @@ int main()
         }
     }
     else{ printf("Your time is left\n");}
+    munmap(mapf, filesize);
     close(file);
     return 1;
 }

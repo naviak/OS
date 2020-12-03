@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <errno.h>
 #include <stdio.h>
 #define filename "text.txt"
 
@@ -34,10 +35,16 @@ int main()
     Table table[filesize];
     memset(table, 0, filesize * sizeof(Table));
     char buffer[filesize];
-    if (read(file, buffer, filesize) == -1)
+    while(read(file, buffer, filesize) == -1)
     {
-	close(file);
-        return 0;
+	if(errno == EINTR)
+	{
+		continue;
+	}
+	else
+	{
+        	return 0;
+	}
     }
     printf("\n");
     for(int i = 1; i < filesize; ++i)
