@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+
+int main()
+{
+	printf("Real User ID = %lu\n", (unsigned long int)getuid());
+	printf("Effective User ID = %lu\n", (unsigned long int)geteuid());
+	FILE* file = fopen("test.txt", "r" );
+	if(file!= NULL)
+	{
+		fclose(file);
+	}
+	else
+	{
+		perror("CANNOT OPEN FILE");
+	}
+	
+	return 0;
+}
+
