@@ -7,7 +7,7 @@
 int main(int argc, char *argv[]) {
     if (argc < 2)
     {
-        printf("Wrong way of usage function\n", argv[0]);
+        printf("Wrong way of usage function\n");
         return 0;
     }
     int status;
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
             }
              if (WIFSIGNALED(status))
             {
-                printf("killed by signal %d\n", WTERMSIG(status));
+                printf("cp is signalled by %d\n", WTERMSIG(status));
             }
             else if (WIFSTOPPED(status))
             {
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
             }
             else if (WIFCONTINUED(status))
             {
-                printf("continued\n");
+                printf("continued after stop or smth else\n");
             }
         } while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
