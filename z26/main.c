@@ -6,9 +6,11 @@
 
 void close_pipe(FILE* pipe)
 {
-    if (pclose(pipe) == -1)
+    int status = pclose(pipe);
+    if (status == -1)
     {
-        exit(EXIT_FAILURE);
+        printf("error during pclose\n");
+        exit(0);
     }
 }
 
@@ -22,7 +24,7 @@ int main(int argc, char* argv[])
     }
 
     char buf[BUFFER_SIZE];
-    size_t read_count = fread(buf, 1, BUFFER_SIZE, pipe);
+    size_t read_count = fread(buf, sizeof(char), BUFFER_SIZE, pipe);
     if (ferror(pipe) == -1)
     {
         close_pipe(pipe);
@@ -34,7 +36,7 @@ int main(int argc, char* argv[])
     {
         buf[i] = (char)toupper(buf[i]);
     }
-    size_t written_count = fwrite(buf, read_count, 1, stdout);
+    size_t written_count = fwrite(buf, read_count, sizeof(char), stdout);
     if (ferror(pipe) == -1)
     {
         return 0;
